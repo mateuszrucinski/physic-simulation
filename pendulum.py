@@ -3,16 +3,16 @@ import math
 
 pygame.init()
 
-# Ustawienia ekranu
 WIDTH, HEIGHT = 2000, 1000
 SCALE_OF_PIXELS = 0.01
+G = 9.81     
+
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Wahadło matematyczne")
 
 fps = 60
 timer = pygame.time.Clock()
 
-# Kolory
 GREEN = (34, 139, 34)
 BLUE = (0, 150, 255)
 RED = (255, 0, 0)
@@ -22,8 +22,7 @@ WHITE = (255, 255, 255)
 
 alfa0 = math.pi / 4  
 L_pixels = HEIGHT / 2
-L = L_pixels * SCALE_OF_PIXELS      
-G = 9.81           
+L = L_pixels * SCALE_OF_PIXELS            
 omega = math.sqrt(G / L)
 time = 0
 dt = 1 / fps
@@ -96,7 +95,6 @@ def draw_velocity_vector(velocity, alfa0):
     vx = -velocity * math.cos(alfa)
     vy = velocity * math.sin(alfa)
 
-    # Przeskalowanie dla widoczności
     vx_scaled = vx * VELOCITY_SCALE
     vy_scaled = vy * VELOCITY_SCALE
 
@@ -113,32 +111,32 @@ def draw_ui():
     pygame.draw.rect(screen, GREEN if not running_simulation else GRAY, start_button)
     screen.blit(font.render("START", True, WHITE), (75, 60))
 
-    # Przycisk stop
+    #stop
     pygame.draw.rect(screen, RED if running_simulation else GRAY, stop_button)
     screen.blit(font.render("STOP", True, WHITE), (285, 60))
 
-    # Suwak kąta
+    #suwak kata
     pygame.draw.rect(screen, WHITE, angle_slider)
     pygame.draw.circle(screen, RED, (50 + int(3 * angle_value), 155), 15)
     screen.blit(font.render(f"Kąt: {round(angle_value / 100 * 90)}°", True, WHITE), (400, 140))
 
-    # Suwak długości
+    #suwak dlugosci
     pygame.draw.rect(screen, WHITE, length_slider)
     pygame.draw.circle(screen, RED, (50 + int(3 * length_value), 255), 15)
     screen.blit(font.render(f"Długość: {round(L, 2)} m", True, WHITE), (400, 240))
 
-    # Suwak masy
+    #suwak masy
     pygame.draw.rect(screen, WHITE, mass_slider)
     pygame.draw.circle(screen, RED, (50 + int(3 * mass_value), 355), 15)
     screen.blit(font.render(f"Masa: {round(mass_value / 100 * 100)} kg", True, WHITE), (400, 340))
 
-    # Wypisanie parametrów fizycznych
+    #wypisanie parametrow fizycznych
     screen.blit(font.render(f"Okres T: {T:.2f} s", True, WHITE), (50, 450))
     screen.blit(font.render(f"Prędkość V(t): {velocity:.2f} m/s", True, WHITE), (50, 500))
     screen.blit(font.render(f"Energia kinetyczna: {kinetic_energy:.2f} J", True, WHITE), (50, 550))
     screen.blit(font.render(f"Energia potencjalna: {potential_energy:.2f} J", True, WHITE), (50, 600))
 
-    # Rysowanie checkboxa i etykiety
+    #checkboxy
     pygame.draw.rect(screen, WHITE, checkbox_rect_v, 2)
     if show_velocity_vector:
         pygame.draw.line(screen, WHITE, (checkbox_rect_v.left + 5, checkbox_rect_v.centery), 
@@ -165,7 +163,6 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-        # Obsługa kliknięć myszą na przyciski
         if event.type == pygame.MOUSEBUTTONDOWN:
             if start_button.collidepoint(event.pos):
                 running_simulation = True
@@ -187,7 +184,7 @@ while running:
                 omega = math.sqrt(G / L)
             if mass_slider.collidepoint(event.pos):
                 mass_value = max(0, min(100, (event.pos[0] - 50) // 3))
-                mass = (mass_value / 100) * 100  # Przeskalowanie masy do 0-100 kg
+                mass = (mass_value / 100) * 100
 
     draw_pendulum()
     if(show_gravitation_force_vector):

@@ -130,7 +130,7 @@ def calculate_physics():
 
     return velocity, kinetic_energy, potential_energy, distance_to_target_X
 
-# suwaki do zmiany parametrów
+#suwaki do param fizycznych
 mass_slider = pygame.Rect(WIDTH - 450, 150, 300, 10)
 velocity_slider = pygame.Rect(WIDTH - 450, 250, 300, 10)
 angle_slider = pygame.Rect(WIDTH - 450, 350, 300, 10)
